@@ -1,3 +1,118 @@
-body {
+.site-title {
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+    color: #fff;
+    margin: 0; /* Removes default <h1> margin */
+    box-shadow: 2px 2px 5px #333d29; /* X, Y, blur, color */
+} /* This is for the main title only. */
+
+.logo-img {
+    height: 60px; /* Controls how tall the image is */
+    width: auto; /* Maintains aspect ratio so it doesn't stretch */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+}
+
+.logo-img:hover {
+    transform: scale(1.13); /* Scales the image up by 10% */
+    transition: 1.0s; /* Smooth transition for the scaling effect */
+} /* This is for the logo image hover effect */
+
+.logo-group {
+    display: flex; /* Uses flexbox for layout */
+    align-items: center; /* Vertically centers items */
+    gap: 0.5rem; /* Adds space between the logo and title */
+    margin-left: 0; /* Adds space to the left of the logo/title group */
+    flex-shrink: 0; /* Prevents shrinking */
+    flex-grow: 0; /* Prevents growing */
+}
+
+.logo-group a {
+    display: flex; /* Uses flexbox for layout */
+    align-items: center; /* Vertically centers items */
+    text-decoration: none; /* Removes underline from links */
+    gap: 0.5rem; /* Adds space between the logo and title */
+}
+
+/* Navigation Bar Styles - Start */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px;
+  color: white;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.hamburger {
+  display: none; /* hidden by default */
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive: when screen is smaller than 600px */
+@media screen and (max-width: 600px) {
+  .nav-links {
+    display: none; /* hide links initially */
+    flex-direction: column;
+    width: 100%;
+    background-color: #333;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+  }
+
+  .hamburger {
+    display: block; /* show hamburger on small screens */
+  }
+}
+/* Navigation Bar Styles - End */
+
+
+p {
     line-height: 1.5;
+}
+
+body {
+    background-color: #85AAAA;
+    margin: 1rem;
+}
+
+footer{
+    background-color: #A65111 ; /* Brown background for the footer */
+    text-align: center; /* Center the Footer text */
+    color: #DDAA00;
+    text-emphasis: bold; /* Makes the footer text bold */
+    text-underline-position: under; /* Underlines the footer text */
+    padding: 1rem; /* Adds padding around the footer text */
+    position-anchor: bottom; /* Anchors the footer to the bottom of the page */
+    width: 100%; /* Makes the footer full width */
+    bottom: 0; /* Positions the footer at the bottom */
+}
+
+
+
+.bck-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px auto;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.bck-btn:hover {
+    background-color: #575757;
 }
