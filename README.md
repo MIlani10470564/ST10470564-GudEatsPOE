@@ -137,6 +137,7 @@ Vercel
 Place robots.txt and sitemap.xml in the site root.
 Ensure all image and page paths are relative (e.g., gallery.html).
 
+https://github.com/MIlani10470564/ST10470564-GudEatsPOE.git
 References
 
 Formspree. (n.d.) Formspree – Contact form for static sites. Available at: https://formspree.io/
