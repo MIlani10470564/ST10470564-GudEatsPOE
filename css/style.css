@@ -116,3 +116,20 @@ footer{
 .bck-btn:hover {
     background-color: #575757;
 }
+.recipe-subheading {
+    font-size: 1.5rem;
+    color: #A65111; /* Matches your footer accent */
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px #fff3, 0 1px 0 #dda; /* subtle highlight */
+}
+.recipe {
+    background-color: #fff;
+    border: 2px solid #A65111; /* Matches your footer accent */
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 8px #aaa; /* Adds a subtle shadow */
+}
