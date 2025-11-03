@@ -1,12 +1,253 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <title>GudEats Recipe</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px;
+      background: #f7fbf9;
+      color: #111;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .hero {
+      display: block;
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #eee;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+    }
+
+    .meta {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .col {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .section {
+      margin-top: 12px;
+    }
+
+    ul.ingredients {
+      list-style: disc;
+      margin-left: 20px;
+    }
+
+    ol.steps {
+      margin-left: 18px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .back-button {
+      display: inline-block;
+      background: #72a5d3;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .back-button:hover {
+      background: #5d8db9;
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        height: 220px;
+      }
+    }
+  </style>
 </head>
 <body>
-    
+  <div class="wrap" id="app">
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">← Back</button>
+
+    <img id="hero" class="hero" src="" alt="Recipe image" />
+    <h1 id="title">Recipe title</h1>
+    <div class="meta" id="meta"></div>
+
+    <div class="section">
+      <h3>Ingredients</h3>
+      <ul class="ingredients" id="ingredients"></ul>
+    </div>
+
+    <div class="section">
+      <h3>Method</h3>
+      <ol class="steps" id="steps"></ol>
+    </div>
+
+    <div class="section row">
+      <div class="col"><strong>Prep time:</strong> <span id="prep">15 mins</span></div>
+      <div class="col"><strong>Cook time:</strong> <span id="cook">20 mins</span></div>
+      <div class="col"><strong>Serves:</strong> <span id="serves">2</span></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn" id="printBtn">Print</button>
+      <a href="gallery.html" class="btn" style="margin-left:8px;">Back to Gallery</a>
+    </div>
+
+    <div style="font-size:12px;color:#666;margin-top:14px;">
+      <strong>Note:</strong> Images used here are for prototype. Replace with licensed assets for final submission.
+    </div>
+  </div>
+
+<script>
+function goBack() {
+  // Takes user to previous page
+  window.history.back();
+}
+
+/*
+  Simple recipe page:
+  - reads ?id= from URL
+  - loads same sample menu data used in gallery (so ids match)
+  - renders ingredients & steps (sample content)
+*/
+
+const MENU = [
+  { id:'m1', title:'Classic Margherita Pizza', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Pizza_Margherita.JPG', cat:'Pizza', diet:'vegetarian', price:129, pop:95, date:'2025-09-01', excerpt:'Neapolitan-style with basil & mozzarella.' },
+  { id:'m2', title:'GudEats Signature Beef Burger', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Beef_burger.jpg', cat:'Burgers', diet:'', price:145, pop:92, date:'2025-06-10', excerpt:'Beef patty, cheddar, pickles, secret sauce.' },
+  { id:'m3', title:'Caesar Salad with Grilled Chicken', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Caesar_salad_%282%29.jpg', cat:'Salads', diet:'', price:99, pop:79, date:'2025-04-22', excerpt:'Romaine, parmesan, house Caesar dressing.' },
+  { id:'m4', title:'Sushi Platter (Assorted)', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Sushi_platter.jpg', cat:'Sushi', diet:'', price:199, pop:85, date:'2025-08-02', excerpt:'Selection of nigiri & maki.' },
+  { id:'m5', title:'Pad Thai (Shrimp)', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Pad_thai.jpg', cat:'Noodles', diet:'', price:119, pop:81, date:'2025-05-12', excerpt:'Rice noodles with shrimp, peanuts & tamarind.' },
+  { id:'m6', title:'Tandoori Chicken Platter', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Tandoori_Chicken.jpg', cat:'Grill', diet:'', price:159, pop:88, date:'2025-07-05', excerpt:'Spiced chicken marinated in yogurt.' },
+  { id:'m7', title:'Seafood Paella', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Paella_de_marisco_01.jpg', cat:'Rice', diet:'', price:189, pop:86, date:'2025-03-18', excerpt:'Saffron rice with mussels, prawns & chorizo.' },
+  { id:'m8', title:'Chocolate Lava Cake', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate_lava_cake.jpg', cat:'Dessert', diet:'vegetarian', price:69, pop:90, date:'2025-10-02', excerpt:'Warm cake with molten center & ice cream.' },
+  { id:'m9', title:'Avocado Toast with Poached Egg', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Avocado_toast.jpg', cat:'Breakfast', diet:'vegetarian', price:79, pop:74, date:'2025-02-11', excerpt:'Sourdough, smashed avo, chilli flakes & egg.' },
+  { id:'m10', title:'Grilled Salmon with Lemon Butter', img:'https://commons.wikimedia.org/wiki/Special:FilePath/Grilled_Salmon.jpg', cat:'Seafood', diet:'', price:169, pop:91, date:'2025-06-30', excerpt:'Pan-seared salmon, lemon-butter & veg.' }
+];
+
+const RECIPE_DETAILS = {
+  m1: {
+    ingredients: ['300g pizza dough','100g mozzarella','Tomato sauce','Fresh basil leaves','Olive oil','Salt'],
+    steps: ['Preheat oven to highest setting.', 'Stretch dough to 25cm.', 'Spread tomato sauce, add mozzarella.', 'Bake 5–8 minutes until charred.', 'Finish with basil and drizzle of oil.'],
+    prep:'15 mins', cook:'8–12 mins', serves:'2'
+  },
+  m2: {
+    ingredients: ['200g beef mince','1 burger bun','Cheddar slice','Lettuce','Tomato','Pickles','Salt & pepper'],
+    steps: ['Form patties and season.', 'Grill patties to preferred doneness.', 'Toast buns, assemble burger with toppings and sauce.'],
+    prep:'10 mins', cook:'8–10 mins', serves:'1'
+  },
+  m3: {
+    ingredients: ['Romaine lettuce','Grilled chicken','Parmesan','Croutons','Caesar dressing'],
+    steps: ['Toss lettuce with dressing.', 'Top with sliced grilled chicken, parmesan and croutons.'],
+    prep:'10 mins', cook:'8 mins', serves:'2'
+  },
+  m4: {
+    ingredients: ['Assorted sushi rice','Fish & seafood','Nori','Soy sauce','Wasabi','Pickled ginger'],
+    steps: ['Prepare sushi rice and fillings.', 'Assemble nigiri and maki on a platter.'],
+    prep:'30 mins', cook:'0 mins', serves:'2–3'
+  },
+  m5: {
+    ingredients: ['Rice noodles','Shrimp','Tamarind paste','Peanuts','Bean sprouts','Eggs'],
+    steps: ['Soak noodles, stir-fry shrimp, add sauce, toss noodles and finish with peanuts.'],
+    prep:'15 mins', cook:'10 mins', serves:'2'
+  },
+  m6: {
+    ingredients: ['Chicken pieces','Yogurt','Tandoori masala','Lemon','Coriander'],
+    steps: ['Marinate chicken for 2+ hours.', 'Grill or bake until cooked and slightly charred.'],
+    prep:'20 mins (+marinate)', cook:'25–30 mins', serves:'2–3'
+  },
+  m7: {
+    ingredients: ['Short-grain rice','Saffron','Mussels','Prawns','Chorizo','Peas'],
+    steps: ['Sauté sofrito, add rice and stock, add seafood and cook without stirring until rice done.'],
+    prep:'20 mins', cook:'30–35 mins', serves:'3–4'
+  },
+  m8: {
+    ingredients: ['Dark chocolate','Butter','Eggs','Sugar','Flour','Vanilla','Ice cream (optional)'],
+    steps: ['Melt chocolate and butter, whisk with eggs & sugar, fold in flour, bake 10–12 mins until edges set.'],
+    prep:'15 mins', cook:'10–12 mins', serves:'2'
+  },
+  m9: {
+    ingredients: ['Sourdough bread','1 ripe avocado','Eggs','Lemon','Chilli flakes','Salt'],
+    steps: ['Toast bread, mash avocado with lemon and salt, top with poached egg and chilli.'],
+    prep:'10 mins', cook:'6 mins', serves:'1–2'
+  },
+  m10: {
+    ingredients: ['Salmon fillets','Butter','Lemon','Salt & pepper','Seasonal veg'],
+    steps: ['Season salmon, sear skin-side down, finish with lemon butter and serve with veg.'],
+    prep:'10 mins', cook:'8–12 mins', serves:'2'
+  }
+};
+
+function getIdFromQuery(){
+  const p = new URLSearchParams(location.search);
+  return p.get('id') || '';
+}
+
+function findItem(id){
+  return MENU.find(x => x.id === id);
+}
+
+function renderRecipe(item){
+  if (!item){
+    document.getElementById('title').textContent = 'Recipe not found';
+    document.getElementById('hero').src = '';
+    return;
+  }
+  const details = RECIPE_DETAILS[item.id];
+  document.getElementById('title').textContent = item.title;
+  document.getElementById('hero').src = item.img;
+  document.getElementById('meta').textContent = `${item.cat}${item.diet ? ' • ' + item.diet : ''} • ${new Date(item.date).toLocaleDateString()}`;
+  document.getElementById('prep').textContent = details.prep;
+  document.getElementById('cook').textContent = details.cook;
+  document.getElementById('serves').textContent = details.serves;
+
+  const ul = document.getElementById('ingredients');
+  details.ingredients.forEach(i => { const li = document.createElement('li'); li.textContent = i; ul.appendChild(li); });
+
+  const ol = document.getElementById('steps');
+  details.steps.forEach(s => { const li = document.createElement('li'); li.textContent = s; ol.appendChild(li); });
+}
+
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+const id = getIdFromQuery();
+const item = findItem(id);
+renderRecipe(item || MENU[0]);
+</script>
 </body>
 </html>

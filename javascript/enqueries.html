@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GudEats — Enquiries</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{--bg:#000042;--fg:#f3f6f4;--accent:#72a5d3}
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--fg)}
+    .container{max-width:900px;margin:28px auto;padding:20px}
+    .wrap{background:var(--accent);color:var(--bg);border-radius:10px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .brand{font-weight:700;font-size:20px}
+    .back{background:#000042;color:#f3f6f4;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:bold}
+    .intro{background:rgba(0,0,66,0.06);padding:12px;border-radius:8px;color:var(--bg);margin-bottom:16px}
+    form .field{display:flex;flex-direction:column;margin-bottom:12px}
+    label{font-size:14px;margin-bottom:6px;color:var(--bg);font-weight:600}
+    input[type="text"],input[type="email"],input[type="tel"],select,textarea{
+      padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.12);font-size:14px;background:rgba(255,255,255,0.95);color:#111;outline:none;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .horizontal{display:flex;gap:12px}
+    .horizontal .field{flex:1}
+    .actions{display:flex;gap:10px;align-items:center;margin-top:8px}
+    button{background:var(--bg);color:var(--fg);border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+    button[disabled]{opacity:0.6;cursor:progress}
+    .note{font-size:13px;color:#000042;margin-top:10px}
+    .success{background:#bfffcf;color:#042000;padding:10px;border-radius:6px;margin-bottom:10px;text-align:center}
+    .error{background:#ffdddd;color:#8b0000;padding:10px;border-radius:6px;margin-bottom:10px;text-align:center}
+    @media (max-width:720px){.horizontal{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">GudEats — Enquiries</div>
+        <a class="back" href="index.html">← Back to Home</a>
+      </div>
+
+      <p class="intro"><strong>Have a question?</strong> Fill out the form below and we'll get back to you.</p>
+
+      <div id="msgArea" aria-live="polite"></div>
+
+      <!--
+        Replace YOUR_FORM_ID below with the Formspree form id you receive (e.g. f/abcdwxyz)
+        The form has a normal action (fallback) and JS handles AJAX submit for smoother UX.
+      -->
+      <form id="enquiryForm" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+        <div class="horizontal">
+          <div class="field">
+            <label for="name">Full name *</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+        </div>
+
+        <div class="horizontal">
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+27 82 123 4567">
+          </div>
+          <div class="field">
+            <label for="type">Enquiry type *</label>
+            <select id="type" name="type" required>
+              <option value="">Select type</option>
+              <option>General</option>
+              <option>Booking</option>
+              <option>Catering</option>
+              <option>Partnerships</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject *</label>
+          <input id="subject" name="_subject" type="text" required placeholder="Short subject line">
+        </div>
+
+        <div class="field">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <!-- Helpful Formspree variables:
+             _subject - sets the email subject
+             _replyto - Formspree uses this for reply-to header (put in email)
+             _gotcha - a honeypot field (anti-spam) - leave blank
+        -->
+        <input type="hidden" name="_replyto" id="_replyto">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="field" style="margin-top:8px;">
+          <label>
+            <input type="checkbox" id="consent" name="consent" required> I consent to be contacted regarding this enquiry *
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="sendBtn">Send Enquiry</button>
+          <button type="button" id="clearBtn">Clear</button>
+        </div>
+
+        <p class="note">Note: Submissions will be sent to the email you verified in Formspree.</p>
+      </form>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // Replace 'https://formspree.io/f/YOUR_FORM_ID' in the form action above with your real Formspree endpoint.
+  const form = document.getElementById('enquiryForm');
+  const msgArea = document.getElementById('msgArea');
+  const sendBtn = document.getElementById('sendBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  // Put email into the _replyto hidden input for nicer reply behavior
+  const replyToInput = document.getElementById('_replyto');
+  document.getElementById('email').addEventListener('input', e => replyToInput.value = e.target.value);
+
+  function showMessage(type, text){
+    msgArea.innerHTML = `<div class="${type === 'ok' ? 'success' : 'error'}">${text}</div>`;
+    setTimeout(()=> { msgArea.innerHTML = ''; }, 7000);
+  }
+
+  // Basic validation helpers
+  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function isPhone(v){ return v.trim() === '' || /^[0-9+\s()-]{6,20}$/.test(v); }
+
+  form.addEventListener('submit', function(ev){
+    // Attempt AJAX submit to improve UX; if fetch fails, the form's action will still POST (fallback)
+    ev.preventDefault();
+
+    // read values
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.phone.value.trim(),
+      type: form.type.value,
+      subject: form['_subject'].value.trim(),
+      message: form.message.value.trim(),
+      consent: form.consent.checked
+    };
+
+    // client validation
+    if (!data.name || !data.email || !data.type || !data.subject || !data.message || !data.consent) {
+      showMessage('err','Please fill in all required fields and accept consent.');
+      return;
+    }
+    if (!isEmail(data.email)) { showMessage('err','Please enter a valid email address.'); return; }
+    if (!isPhone(data.phone)) { showMessage('err','Please enter a valid phone or leave blank.'); return; }
+
+    // disable button
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+
+    // Build FormData to match standard form submission (Formspree accepts form data or JSON)
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('phone', data.phone);
+    formData.append('type', data.type);
+    formData.append('_subject', data.subject);
+    formData.append('message', data.message);
+    formData.append('_replyto', data.email);
+
+    // Post to the form's action URL (read from form to keep placeholder behavior)
+    const endpoint = form.action;
+
+    fetch(endpoint, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // don't set Content-Type; browser sets boundary for FormData
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) return response.json().catch(()=>({ ok:true }));
+      // non-2xx
+      return response.json().then(err => Promise.reject(err));
+    })
+    .then(() => {
+      showMessage('ok','Thanks — your enquiry was sent. Check your email for a copy (and spam folder).');
+      form.reset();
+    })
+    .catch(err => {
+      console.error('Formspree submit error:', err);
+      // fallback: allow default form submit (uncomment next line to perform full-page POST fallback)
+      // form.submit();
+      showMessage('err','There was a problem sending your enquiry. The form will attempt a normal submit as fallback; if that fails, please email milanimviko@gmail.com directly.');
+      // Attempt a standard submit (will navigate away) as a fallback
+      try { form.submit(); } catch(e) { /* ignore */ }
+    })
+    .finally(()=> {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Enquiry';
+    });
+  });
+
+  clearBtn.addEventListener('click', () => form.reset());
+})();
+</script>
+</body>
+</html>
