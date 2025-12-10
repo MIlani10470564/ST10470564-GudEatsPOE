@@ -118,7 +118,7 @@ footer{
 }
 .recipe-subheading {
     font-size: 1.5rem;
-    color: #A65111; /* Matches your footer accent */
+    color: #A65111; /* Matches footer accent */
     font-weight: bold;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
@@ -127,7 +127,7 @@ footer{
 }
 .recipe {
     background-color: #fff;
-    border: 2px solid #A65111; /* Matches your footer accent */
+    border: 2px solid #A65111; /* Matches footer accent */
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1.5rem;

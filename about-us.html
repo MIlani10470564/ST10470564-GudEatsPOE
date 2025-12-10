@@ -1,40 +1,287 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GudEats — About Us</title>
+
+  <style>
+    :root{
+      --bg: #000042;
+      --fg: #f3f6f4;
+      --accent: #72a5d3;
+      --nav-height: 72px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.10));backdrop-filter:blur(2px)}
+    .navbar{
+      max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--nav-height);padding:12px 20px;
+    }
+    .logo-group{display:flex;align-items:center;gap:12px}
+    .logo-img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:2px solid rgba(243,246,244,0.06)}
+    .site-title{font-size:20px;color:var(--fg);text-decoration:none;margin-left:0}
+    .nav-links-container{display:flex;align-items:center;gap:18px}
+    .nav-links{list-style:none;display:flex;gap:18px;align-items:center}
+    .nav-links a{color:var(--fg);text-decoration:none;padding:8px 12px;border-radius:8px;transition:background .18s}
+    .nav-links a:hover{background:rgba(255,255,255,0.03)}
+    .hamburger{display:none;cursor:pointer;font-size:26px;color:var(--fg);padding:6px 10px;border-radius:6px}
+
+    /* Page wrapper */
+    .hero {
+      max-width:1200px;
+      margin:28px auto;
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:22px;
+      align-items:start;
+    }
+
+    /* left content */
+    .content-left{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+      padding:28px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);
+    }
+
+    h1.page-title{font-size:32px;color:var(--fg);margin-bottom:12px}
+    p.lead{color:rgba(243,246,244,0.95);margin-bottom:14px}
+    .section{margin-top:12px;color:rgba(243,246,244,0.9)}
+
+    /* right column — mirror of preview area on index */
+    .side-card{
+      display:flex;flex-direction:column;gap:12px;align-items:center;
+    }
+    .card{
+      width:100%;max-width:420px;border-radius:12px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, #111124, #000042);
+      padding:18px;
+    }
+    .card h3{color:var(--accent);margin-bottom:8px}
+    .card p{color:rgba(243,246,244,0.9)}
+
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .btn-primary{
+      background:var(--accent);color:var(--bg);padding:12px 18px;border-radius:10px;border:none;font-weight:700;cursor:pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      text-decoration:none;display:inline-block;text-align:center;
+    }
+    .btn-ghost{background:transparent;color:var(--fg);padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);cursor:pointer;text-decoration:none;display:inline-block}
+
+    main{max-width:1200px;margin:20px auto;padding:0 20px}
+    footer{max-width:1200px;margin:24px auto;padding:20px;text-align:center;color:rgba(243,246,244,0.6)}
+
+    /* Responsive map container */
+    .map-wrapper{
+      width:100%;
+      height:220px;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.04);
+      margin-top:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+    }
+    .map-iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:16px;padding:18px}
+      .side-card{order:-1}
+    }
+    @media (max-width:640px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+      .logo-img{width:48px;height:48px}
+      h1.page-title{font-size:26px}
+    }
+  </style>
 </head>
 <body>
-     <header>
-        <nav class="navbar">
-            <div class="logo-group">
-                <a href="index.html">
-                <img src="Assets/images/logo.jpg" alt="Logo" class="logo-img">
-                <h1 class="site-title">GudEats</h1>
-                </a>
-            </div>
-            <div class="nav-links-container">
-                <!--Navigation links/menu bar-->
-                <ul class="nav-links">
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="contact-us.html">Contact Us</a></li> 
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    &#9776;
-                </div>
-            </div>
-        </nav>
-    </header>
-    <h1>About Us</h1>
-     <p>GudEats is a culinary haven where food enthusiasts come together to celebrate the art of cooking and the joy of eating. Our mission is to inspire and empower individuals to explore diverse cuisines, share recipes, and connect through their love for food. Whether you're a seasoned chef or a home cook, GudEats offers a platform to discover new flavors, learn cooking techniques, and engage with a vibrant community of food lovers. Join us on this delicious journey and let's make every meal an unforgettable experience!</p>
-    <footer>
-        <p class="footer">&copy; 2024 GudEats. All Rights Reserved.</p>
-    </footer>
-    <a href="index.html">
-      <button class="bck-btn">Back to Home</button>
-    </a>
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo-group">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none">
+          <img src="Assets/images/logo.jpg" alt="GudEats logo" class="logo-img">
+          <div>
+            <div class="site-title">GudEats</div>
+            <div style="font-size:12px;color:rgba(243,246,244,0.6)">Home of good food</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-links-container">
+        <ul class="nav-links" role="menubar">
+          <li role="none"><a role="menuitem" href="gallery.html">Gallery</a></li>
+          <li role="none"><a role="menuitem" href="about-us.html">About Us</a></li>
+          <li role="none"><a role="menuitem" href="contact-us.html">Contact Us</a></li>
+          <li role="none"><a role="menuitem" href="enquiries.html">Enquiries</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger" aria-hidden="true">&#9776;</div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="About hero">
+    <div class="content-left" role="main">
+      <h1 class="page-title">About GudEats</h1>
+      <p class="lead">GudEats is a culinary haven where food enthusiasts come together to celebrate the art of cooking and the joy of eating. Our mission is to inspire and empower individuals to explore diverse cuisines, share recipes, and connect through their love for food.</p>
+
+      <div class="section">
+        <h3 style="color:var(--accent);margin-bottom:8px">What we offer</h3>
+        <p>Whether you're a seasoned chef or a home cook, GudEats offers a platform to discover new flavours, learn cooking techniques, and engage with a vibrant community of food lovers. We focus on seasonal produce, approachable recipes, and clear instructions so anyone can cook with confidence.</p>
+      </div>
+
+      <div class="section">
+        <h3 style="color:var(--accent);margin-bottom:8px">Our mission</h3>
+        <p>To inspire delicious meals through accessible recipes, honest ingredients, and thoughtful storytelling — bringing people together one plate at a time.</p>
+      </div>
+
+      <div class="actions">
+        <!-- Button linking to enquiries.html as requested -->
+        <a class="btn-primary" href="enquiries.html">Make an Enquiry</a>
+        <a class="btn-ghost" href="index.html">Back to Home</a>
+      </div>
+    </div>
+
+    <aside class="side-card" role="complementary" aria-label="About card">
+      <div class="card" id="about-card">
+        <h3>Our Promise</h3>
+        <p>We use locally sourced seasonal produce wherever possible and prepare each dish with care. Licensed images used on this site reflect our real dishes and suppliers.</p>
+
+        <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:12px 0;border-radius:1px">
+
+        <h3>Opening Hours</h3>
+        <p>Mon - Sun: 10:00 – 22:00</p>
+
+        <!-- ---------------------------
+             Quick Map Embed (no API key required)
+             Centers on Cape Town Central.
+             Lightweight and responsive.
+             --------------------------- -->
+        <div class="map-wrapper" aria-hidden="false" aria-label="GudEats location map">
+          <!-- Use coordinates for Cape Town Central. z=15 controls zoom (lower number = further out). -->
+          <iframe
+            class="map-iframe"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="GudEats — Cape Town Central location"
+            src="https://www.google.com/maps?q=-33.9258,18.4232&z=15&output=embed">
+          </iframe>
+        </div>
+
+        <p style="margin-top:10px;color:rgba(243,246,244,0.7);font-size:13px">
+          <a href="https://www.google.com/maps/search/?api=1&query=-33.9258,18.4232" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline">Open in Google Maps</a>
+        </p>
+
+      </div>
+    </aside>
+  </section>
+
+  <main>
+    <div style="max-width:1200px;margin:0 auto;padding:0 20px 40px">
+      <article style="background:linear-gradient(180deg,rgba(255,255,255,0.01), rgba(255,255,255,0.01));padding:16px;border-radius:10px">
+        <h3 style="color:var(--accent);margin-bottom:8px">Join the community</h3>
+        <p style="color:rgba(243,246,244,0.9)">Follow GudEats for seasonal recipes, tutorials, and community events. Want to collaborate? Use the enquiries form and let's chat.</p>
+        <p style="margin-top:12px"><a class="btn-primary" href="enquiries.html">Make an Enquiry</a></p>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer">&copy; 2025  GudEats. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    (function(){
+      const ham = document.getElementById('hamburger');
+      const nav = document.querySelector('.nav-links');
+      ham && ham.addEventListener('click', function(){
+        if (!nav) return;
+        if (nav.style.display === 'flex') {
+          nav.style.display = 'none';
+        } else {
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.background = 'linear-gradient(180deg, rgba(0,0,66,0.06), rgba(0,0,66,0.12))';
+          nav.style.padding = '12px';
+          nav.style.position = 'absolute';
+          nav.style.right = '20px';
+          nav.style.top = '72px';
+          nav.style.borderRadius = '8px';
+        }
+      });
+    })();
+  </script>
+
+  <!--
+    -----------------------------------------------------------
+    OPTIONAL: Interactive Google Maps (Maps JavaScript API)
+    Use this block if you want a dynamic map with a marker and
+    custom styling/controls. Requires a Google Maps API key.
+
+    Steps:
+      1. Go to Google Cloud Console -> create or select project.
+      2. Enable "Maps JavaScript API".
+      3. Create an API key and restrict it (HTTP referrers -> your domain).
+      4. Replace YOUR_API_KEY below.
+      5. Remove or hide the iframe block above to avoid duplicate content.
+    -----------------------------------------------------------
+  -->
+
+  <!--
+  <script>
+    // Example: interactive map init for Cape Town Central.
+    // Coordinates used: lat: -33.9258, lng: 18.4232
+    function initMap() {
+      const center = { lat: -33.9258, lng: 18.4232 };
+      const mapEl = document.createElement('div');
+      mapEl.style.width = '100%';
+      mapEl.style.height = '220px';
+      mapEl.style.borderRadius = '10px';
+      mapEl.style.overflow = 'hidden';
+      // place it after the opening hours paragraph
+      const aboutCard = document.getElementById('about-card');
+      aboutCard.appendChild(mapEl);
+
+      const map = new google.maps.Map(mapEl, {
+        center,
+        zoom: 15,
+        disableDefaultUI: false, // set true to remove controls
+      });
+
+      const marker = new google.maps.Marker({
+        position: center,
+        map,
+        title: 'GudEats — Cape Town Central'
+      });
+
+      // Optional: info window on click
+      const info = new google.maps.InfoWindow({
+        content: '<strong>GudEats</strong><br>Cape Town Central'
+      });
+      marker.addListener('click', () => info.open(map, marker));
+    }
+  </script>
+
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+  -->
+
 </body>
 </html>

@@ -1,52 +1,223 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GudEats — Home</title>
+
+  <!-- Styles: uses your colour scheme -->
+  <style>
+    :root{
+      --bg: #000042;
+      --fg: #f3f6f4;
+      --accent: #72a5d3;
+      --nav-height: 72px;
+    }
+
+    /* Reset-ish */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Header / nav */
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.10));backdrop-filter:blur(2px)}
+    .navbar{
+      max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--nav-height);padding:12px 20px;
+    }
+    .logo-group{display:flex;align-items:center;gap:12px}
+    .logo-img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:2px solid rgba(243,246,244,0.06)}
+    .site-title{font-size:20px;color:var(--fg);text-decoration:none;margin-left:0}
+    .nav-links-container{display:flex;align-items:center;gap:18px}
+    .nav-links{list-style:none;display:flex;gap:18px;align-items:center}
+    .nav-links a{color:var(--fg);text-decoration:none;padding:8px 12px;border-radius:8px;transition:background .18s}
+    .nav-links a:hover{background:rgba(255,255,255,0.03)}
+    .hamburger{display:none;cursor:pointer;font-size:26px;color:var(--fg);padding:6px 10px;border-radius:6px}
+
+    /* HERO */
+    .hero{
+      max-width:1200px;margin:28px auto;padding:28px;
+      display:grid;grid-template-columns: 1fr 420px;gap:22px;align-items:center;
+    }
+
+    /* left info panel */
+    .hero-left{
+      background: linear-gradient(180deg, rgba(114,165,211,0.06), rgba(0,0,66,0.06));
+      padding:28px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);
+    }
+    .eyebrow{display:inline-block;background:var(--accent);color:var(--bg);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:14px}
+    h1.hero-title{font-size:36px;line-height:1.05;color:var(--fg);margin-bottom:12px}
+    p.lead{color:rgba(243,246,244,0.9);margin-bottom:18px;max-width:60ch}
+    .feature-list{list-style:none;padding-left:0;display:grid;gap:10px;margin-top:12px}
+    .feature-list li{background:rgba(0,0,66,0.06);padding:10px 12px;border-radius:10px;color:var(--fg);display:flex;align-items:center;gap:10px;border-left:4px solid rgba(243,246,244,0.06)}
+    .cta-row{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn-primary{
+      background:var(--accent);color:var(--bg);padding:12px 18px;border-radius:10px;border:none;font-weight:700;cursor:pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .btn-ghost{background:transparent;color:var(--fg);padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+
+    /* right preview box */
+    .hero-right{display:flex;flex-direction:column;gap:12px;align-items:center}
+    .preview-frame{
+      width:100%;max-width:420px;border-radius:12px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, #111124, #000042);
+      position:relative;
+    }
+    .preview-frame img{display:block;width:100%;height:270px;object-fit:cover}
+    .preview-caption{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,0.45);color:var(--fg);padding:8px 12px;border-radius:8px;font-weight:700}
+
+    /* small action tiles below preview */
+    .preview-tiles{display:flex;gap:10px;margin-top:8px}
+    .tile{background:rgba(255,255,255,0.06);padding:10px;border-radius:10px;color:var(--fg);flex:1;text-align:center;font-weight:700}
+    .tile small{display:block;font-weight:400;color:rgba(243,246,244,0.8);font-size:12px;margin-top:6px}
+
+    /* main content area */
+    main{max-width:1200px;margin:20px auto;padding:0 20px}
+    .intro-block{background:rgba(255,255,255,0.02);padding:18px;border-radius:10px;color:var(--fg);margin-bottom:18px}
+
+    footer{max-width:1200px;margin:24px auto;padding:20px;text-align:center;color:rgba(243,246,244,0.6)}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:16px;padding:18px}
+      .hero-right{order:-1}
+    }
+    @media (max-width:640px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+      .logo-img{width:48px;height:48px}
+      .hero-left{padding:18px}
+      h1.hero-title{font-size:28px}
+      .preview-frame img{height:180px}
+    }
+
+    /* tiny helpers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
 </head>
 <body>
-    <header>
-        <audio autoplay loop>
-            <source src="Assets/audio/food.mp3" type="audio/mpeg">
-        </audio>
-        <nav class="navbar">
-            <div class="logo-group">
-                <a href="index.html">
-                <img src="Assets/images/logo.jpg" alt="Logo" class="logo-img">
-                <h1 class="site-title">GudEats</h1>
-                </a>
-            </div>
-            <div class="nav-links-container">
-                <!--Navigation links/menu bar-->
-                <ul class="nav-links">
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="contact-us.html">Contact Us</a></li> 
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    &#9776;
-                </div>
-            </div>
-        </nav>
-    </header>
-    <h1>Welome to GudEats!</h1>
-    <p>Your ultimate destination for delicious recipes, culinary inspiration, and food adventures. Explore our</p>
-    <p>Here’s our starting principle:
+  <header>
+    <!-- keep audio as you had it -->
+    <audio autoplay loop>
+      <source src="Assets/audio/food.mp3" type="audio/mpeg">
+    </audio>
 
-A polished, professional landing page can improve your conversion rates.
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo-group">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none">
+          <img src="Assets/images/logo.jpg" alt="GudEats logo" class="logo-img">
+          <div>
+            <div class="site-title">GudEats</div>
+            <div style="font-size:12px;color:rgba(243,246,244,0.6)">Home of good food</div>
+          </div>
+        </a>
+      </div>
 
-(And a messy one can hurt them.)
+      <div class="nav-links-container">
+        <ul class="nav-links" role="menubar">
+          <li role="none"><a role="menuitem" href="gallery.html">Gallery</a></li>
+          <li role="none"><a role="menuitem" href="about-us.html">About Us</a></li>
+          <li role="none"><a role="menuitem" href="contact-us.html">Contact Us</a></li>
+          <li role="none"><a role="menuitem" href="enquiries.html">Enquiries</a></li>
+        </ul>
 
-Pretty simple, right? You’ve probably heard something similar before. But what the heck does it mean to be “polished” and “professional” on a landing page, anyway? And when it comes to conversions, what’s the magical x-factor that sets exceptional marketers apart?
+        <div class="hamburger" id="hamburger" aria-hidden="true">&#9776;</div>
+      </div>
+    </nav>
+  </header>
 
-With these questions in mind, we want to show off some of the best landing page examples to inspire your next creation. Go ahead and save their smartest, slickest, and snappiest elements for your swipe file.
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <!-- left -->
+    <div class="hero-left" role="region" aria-labelledby="heroHeading">
+      <span class="eyebrow">GudEats — Restaurant</span>
+      <h1 id="heroHeading" class="hero-title">A taste of local ingredients & seasonal flavours</h1>
+      <p class="lead">Hand-crafted dishes, fresh produce, and a menu that changes with the seasons. Discover bold tastes and comforting classics at GudEats.</p>
 
-Throughout, we’ll offer an Unbounce-certified perspective on what makes each page so darn good—and, occasionally, how each could be improved. (Incidentally, most of these examples of landing pages were actually built with Unbounce, too.) Let’s go.</p>
+        <ul class="feature-list">
+            <li>Locally sourced ingredients</li>
+            <li>Seasonal menu updates</li>
+            <li>Cozy, welcoming atmosphere</li> 
 
-    <footer>
-        <p class="footer">&copy; 2024 GudEats. All Rights Reserved.</p>
-    </footer>
+      <div class="cta-row">
+        <button class="btn-primary" onclick="location.href='gallery.html'">View Menu</button>
+        <button class="btn-ghost" onclick="location.href='enquiries.html'">Make an Enquiry</button>
+      </div>
+    </div>
+
+    <!-- right -->
+    <div class="hero-right" role="region" aria-label="Demo preview">
+      <div class="preview-frame" aria-hidden="false">
+        <!-- Replace this preview image with a screenshot of your gallery/site -->
+        <img src="Assets/images/preview.jpg" alt="Site preview image">
+        <div class="preview-caption"> Just GudEats</div>
+      </div>
+
+      <div class="preview-tiles" aria-hidden="true">
+        <div class="tile">Responsive<br><small>Works on mobile</small></div>
+        <div class="tile">Contact Form<br><small>Formspree / EmailJS</small></div>
+        
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="intro-block">
+      <h2 style="margin-bottom:8px;color:var(--fg)">Welcome to GudEats</h2>
+      <p style="color:rgba(243,246,244,0.9)">Your ultimate destination for delicious recipes, culinary inspiration, and food adventures. Explore our curated menu, gallery and enquire for bookings or catering.</p>
+    </div>
+
+    <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+      <article style="background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px">
+        <h3 style="color:var(--accent)">Our Promise</h3>
+        <p style="color:rgba(243,246,244,0.9)">We use seasonal produce sourced locally wherever possible and prepare each dish with care.</p>
+      </article>
+
+      <article style="background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px">
+        <h3 style="color:var(--accent)">Opening Hours</h3>
+        <p style="color:rgba(243,246,244,0.9)">Mon - Sun: 10:00 – 22:00</p>
+      </article>
+
+      <article style="background:linear-gradient(180deg,rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px">
+        <h3 style="color:var(--accent)">Visit Us</h3>
+        <p style="color:rgba(243,246,244,0.9)">12 Food Lane, Rosebank — bookings available via the enquiries page.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer">&copy; 2024 GudEats. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Small script: hamburger -->
+  <script>
+    (function(){
+      const ham = document.getElementById('hamburger');
+      const nav = document.querySelector('.nav-links');
+      ham && ham.addEventListener('click', function(){
+        // simple toggle for mobile
+        if (!nav) return;
+        if (nav.style.display === 'flex') {
+          nav.style.display = 'none';
+        } else {
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.background = 'linear-gradient(180deg, rgba(0,0,66,0.06), rgba(0,0,66,0.12))';
+          nav.style.padding = '12px';
+          nav.style.position = 'absolute';
+          nav.style.right = '20px';
+          nav.style.top = '72px';
+          nav.style.borderRadius = '8px';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

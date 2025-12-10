@@ -1,0 +1,11 @@
+# robots.txt for GudEats - place in your site root (same folder as index.html)
+User-agent: *
+Allow: /
+
+# Block any folders you don't want crawled (uncomment & edit)
+# Disallow: /private/
+# Disallow: /admin/
+
+# Sitemap - replace example.com with your actual domain after deploy
+Sitemap: https://www.example.com/sitemap.xml
+Host: https://github.com/MIlani10470564/ST10470564-GudEatsPOE.git
