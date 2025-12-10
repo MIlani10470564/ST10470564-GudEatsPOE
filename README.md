@@ -38,8 +38,6 @@ GudEats/
 ├── sitemap.xml
 └── README.md
 
-yaml
-Copy code
 
 ---
 
@@ -88,7 +86,6 @@ The sitemap lists all major pages to help search engines index the website effic
 Page Speed Optimization
 Images were compressed using TinyPNG.
 
-Lazy loading (loading="lazy") was added to all images.
 
 CSS and JS files were minified.
 
